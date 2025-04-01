@@ -1,0 +1,29 @@
+{
+  "users": [
+    {
+      "id": "30b2",
+      "username": "test",
+      "email": "test@gmail.com",
+      "password": "33333",
+      "cart": []
+    },
+    {
+      "id": "21d8",
+      "username": "user",
+      "email": "user@gmail.com",
+      "password": "999"
+    },
+    {
+      "id": "6d3d",
+      "username": "bakri",
+      "email": "bakri@gmail.com",
+      "password": "123"
+    },
+    {
+      "id": "60ba",
+      "username": "amit",
+      "email": "amit@gmail.com",
+      "password": "123"
+    }
+  ]
+}
