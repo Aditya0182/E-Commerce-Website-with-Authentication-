@@ -65,6 +65,7 @@
   font-weight: 600;
   color: #333;
 }
+
 .cartTable td button {
   padding: 8px 20px;
   font-size: 0.8rem;
@@ -76,6 +77,38 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cartTable td button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+.placeOrderSection {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.orderButton {
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.orderButton:hover {
+  background: linear-gradient(135deg, #2575fc, #6a11cb);
+}
+
+.orderButton:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
 }
 
 /* Responsive Design */
@@ -93,6 +126,11 @@
     width: 60px;
     height: 60px;
   }
+
+  .orderButton {
+    padding: 10px 25px;
+    font-size: 0.9rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -109,5 +147,10 @@
   .cartTable td img {
     width: 50px;
     height: 50px;
+  }
+
+  .orderButton {
+    padding: 8px 20px;
+    font-size: 0.8rem;
   }
 }
