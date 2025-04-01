@@ -28,7 +28,7 @@ const Navbar = () => {
 
     if (confirmation) {
       try {
-        await axios.delete(`http://localhost:8080/users/${user_id}`);
+        await axios.delete(`https://j-son-server.onrender.com/${user_id}`);
         alert("profile deleted");
         logout()
       } catch (error) {

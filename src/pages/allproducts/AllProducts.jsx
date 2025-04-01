@@ -26,7 +26,7 @@ const AllProducts = () => {
 
   let handleAddToCart = async (product) => {
     console.log(product);
-    let { data } = await axios.get(`http://localhost:8080/users/${userid}`);
+    let { data } = await axios.get(`https://j-son-server.onrender.com/${userid}`);
     console.log(data);
 
     let updatedCart = data.cart ? [...data.cart] : [];
@@ -39,7 +39,7 @@ const AllProducts = () => {
       updatedCart.push({ ...product, quantity: 1 })
     }
 
-    await axios.patch(`http://localhost:8080/users/${userid}`, {
+    await axios.patch(`https://j-son-server.onrender.com/${userid}`, {
       cart: updatedCart
     })
 

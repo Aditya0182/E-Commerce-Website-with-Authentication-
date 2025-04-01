@@ -18,7 +18,7 @@ const Login = () => {
   };
 
   async function getSignupUsers() {
-    let { data } = await axios.get("http://localhost:8080/users");
+    let { data } = await axios.get("https://j-son-server.onrender.com/users");
     console.log(data); //[{},{},{}]
     setAllusers(data);
   }

@@ -18,7 +18,7 @@ const Signup = () => {
     e.preventDefault();
     console.log(signupuser);
     try {
-      let resp = await axios.post("http://localhost:8080/users", signupuser);
+      let resp = await axios.post("https://j-son-server.onrender.com/users", signupuser);
       console.log(resp);
       console.log("data sent successfully");
       setSignupuser({ username: "", email: "", password: "" }); // clear inputs
