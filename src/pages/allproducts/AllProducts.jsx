@@ -26,25 +26,25 @@ const AllProducts = () => {
 
   let handleAddToCart = async (product) => {
     console.log(product);
-    let { data } = await axios.get(`http://localhost:3001/users/${userid}`);
+    let { data } = await axios.get(`http://localhost:8080/users/${userid}`);
     console.log(data);
 
     let updatedCart = data.cart ? [...data.cart] : [];
 
-    let existingProduct = updatedCart.find((ele)=> ele.id === product.id)
+    let existingProduct = updatedCart.find((ele) => ele.id === product.id)
 
-    if(existingProduct){
+    if (existingProduct) {
       existingProduct.quantity += 1
-    }else{
-      updatedCart.push({...product,quantity:1})
+    } else {
+      updatedCart.push({ ...product, quantity: 1 })
     }
 
-    await axios.patch(`http://localhost:3001/users/${userid}`,{
-      cart:updatedCart
+    await axios.patch(`http://localhost:8080/users/${userid}`, {
+      cart: updatedCart
     })
 
     console.log("Product added");
-    
+
   };
 
   if (loading) {

@@ -18,7 +18,7 @@ const Login = () => {
   };
 
   async function getSignupUsers() {
-    let { data } = await axios.get("http://localhost:3001/users");
+    let { data } = await axios.get("http://localhost:8080/users");
     console.log(data); //[{},{},{}]
     setAllusers(data);
   }

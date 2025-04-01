@@ -12,7 +12,7 @@ const EditProfile = () => {
 
   useEffect(() => {
     async function getEditUser() {
-      let { data } = await axios.get(`http://localhost:3001/users/${id}`);
+      let { data } = await axios.get(`http://localhost:8080/users/${id}`);
       console.log(data);
       setEditUser(data);
     }
@@ -27,7 +27,7 @@ const EditProfile = () => {
   let formSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:3001/users/${id}`, editUser);
+      await axios.patch(`http://localhost:8080/users/${id}`, editUser);
       localStorage.removeItem("userid");
       navigate("/");
     } catch (error) {

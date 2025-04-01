@@ -12,7 +12,7 @@ const Cart = () => {
     async function getCartItems() {
       try {
         const { data } = await axios.get(
-          `http://localhost:3001/users/${userid}`
+          `http://localhost:8080/users/${userid}`
         );
         setUserDetails(data); // Store data to state
         setIsLoading(false);
@@ -26,7 +26,7 @@ const Cart = () => {
 
   let handleRemoveformCart = async (productid) => {
     try {
-      let { data } = await axios.get(`http://localhost:3001/users/${userid}`);
+      let { data } = await axios.get(`http://localhost:8080/users/${userid}`);
 
       let updatedCart = data.cart
         .map((item) => {
@@ -47,7 +47,7 @@ const Cart = () => {
         .filter((item) => item !== null);
       console.log(updatedCart);
 
-      await axios.patch(`http://localhost:3001/users/${userid}`, {
+      await axios.patch(`http://localhost:8080/users/${userid}`, {
         cart: updatedCart,
       });
 
