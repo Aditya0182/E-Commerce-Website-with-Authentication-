@@ -19,30 +19,36 @@ export let myRoutes = createBrowserRouter([
       },
       {
         path: "/login",
-        element:<Login />
+        element: <Login />,
       },
       {
         path: "/signup",
-        element:<Signup />
+        element: <Signup />,
       },
       {
         path: "/allproducts",
-        element: <PrivateRoute>
-          <AllProducts />
-        </PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <AllProducts />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/cart",
-        element: <PrivateRoute>
-          <Cart />
-        </PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <Cart />
+          </PrivateRoute>
+        ),
       },
       {
-        path:"/edit/:id",
-        element:<PrivateRoute>
-          <EditProfile/>
-        </PrivateRoute>,
-      }
+        path: "/edit/:id",
+        element: (
+          <PrivateRoute>
+            <EditProfile />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
 ]);

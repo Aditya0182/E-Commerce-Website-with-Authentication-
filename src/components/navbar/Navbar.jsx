@@ -28,7 +28,7 @@ const Navbar = () => {
 
     if (confirmation) {
       try {
-        await axios.delete(`https://j-son-server.onrender.com/${user_id}`);
+        await axios.delete(`https://j-son-server.onrender.com/users/${user_id}`);
         alert("profile deleted");
         logout()
       } catch (error) {
@@ -78,8 +78,9 @@ const Navbar = () => {
               {isDropdownOpen && (
                 <ul className={styles.dropdownMenu}>
                   <li>
-                    <NavLink to={`/edit/${user_id}`}>Edit Profile</NavLink>
+                    <NavLink to={`/edit/${user_id}`} style={{ color: '#333', marginLeft: '-12px', fontSize: '17px' }}>Edit Profile</NavLink>
                   </li>
+
                   <li onClick={deleteProfile}>Delete Profile</li>
                   <li onClick={logout}>Logout</li>
                 </ul>

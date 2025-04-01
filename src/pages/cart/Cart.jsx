@@ -12,9 +12,13 @@ const Cart = () => {
     async function getCartItems() {
       try {
         const { data } = await axios.get(
-          `https://j-son-server.onrender.com/${userid}`
+          `https://j-son-server.onrender.com/users/${userid}`
         );
-        setUserDetails(data); // Store data to state
+        if (data.cart) {
+          setUserDetails(data); // Store data to state
+        } else {
+          console.log("No cart data available for this user.");
+        }
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching cart items:", error);
@@ -26,17 +30,21 @@ const Cart = () => {
 
   let handleRemoveformCart = async (productid) => {
     try {
-      let { data } = await axios.get(`https://j-son-server.onrender.com/${userid}`);
+      let { data } = await axios.get(
+        `https://j-son-server.onrender.com/users/${userid}`
+      );
 
       let updatedCart = data.cart
         .map((item) => {
           if (item.id === productid) {
             if (item.quantity > 1) {
-              // Reduce the quantity
+              const newQuantity = item.quantity - 1;
+              const newPrice = (item.price / item.quantity) * newQuantity;
+
               return {
                 ...item,
-                quantity: item.quantity - 1,
-                price: item.price - Math.floor(item.price / item.quantity),
+                quantity: newQuantity,
+                price: newPrice,
               };
             } else {
               return null;
@@ -45,9 +53,8 @@ const Cart = () => {
           return item;
         })
         .filter((item) => item !== null);
-      console.log(updatedCart);
 
-      await axios.patch(`https://j-son-server.onrender.com/${userid}`, {
+      await axios.patch(`https://j-son-server.onrender.com/users/${userid}`, {
         cart: updatedCart,
       });
 
@@ -59,6 +66,11 @@ const Cart = () => {
 
   if (isLoading) {
     return <h2>Loading...</h2>;
+  }
+
+  // Ensure that userDetails.cart is defined before attempting to map over it
+  if (!userDetails.cart || userDetails.cart.length === 0) {
+    return <h2>Your cart is empty!</h2>;
   }
 
   return (
@@ -86,7 +98,10 @@ const Cart = () => {
               <td>{item.quantity}</td>
               <td>${item.price * item.quantity}</td>
               <td>
-                <button onClick={() => handleRemoveformCart(item.id)}>
+                <button
+                  onClick={() => handleRemoveformCart(item.id)}
+                  disabled={item.quantity === 1}
+                >
                   Remove
                 </button>
               </td>

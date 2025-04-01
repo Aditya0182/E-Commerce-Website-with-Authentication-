@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./EditProfile.module.css";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+
 const EditProfile = () => {
   let [editUser, setEditUser] = useState({});
-
-  let { id } = useParams(); // gets id value from current URL
-  console.log(id);
-
+  let { id } = useParams();
   let navigate = useNavigate();
 
   useEffect(() => {
     async function getEditUser() {
-      let { data } = await axios.get(`https://j-son-server.onrender.com/${id}`);
-      console.log(data);
-      setEditUser(data);
+      console.log("Fetching user with ID:", id);
+      try {
+        let { data } = await axios.get(`https://j-son-server.onrender.com/users/${id}`);
+        console.log("User data received:", data);
+        setEditUser(data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
     }
     getEditUser();
   }, [id]);
@@ -27,11 +30,42 @@ const EditProfile = () => {
   let formSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`https://j-son-server.onrender.com/${id}`, editUser);
+      const response = await axios.patch(`https://j-son-server.onrender.com/users/${id}`, editUser);
+      console.log("Update successful:", response);
       localStorage.removeItem("userid");
       navigate("/");
     } catch (error) {
-      console.log("Error while edit user", error);
+      console.error("Error while editing user:", error);
+      if (error.response) {
+        console.error("Error response status:", error.response.status);
+        console.error("Error response data:", error.response.data);
+      }
+    }
+  };
+
+  const handleDeleteProfile = async (e) => {
+    e.preventDefault(); // Prevent any default form behavior
+    console.log("Delete button clicked, ID:", id);
+    try {
+      // Add headers explicitly
+      const response = await axios.delete(`https://j-son-server.onrender.com/users/${id}`, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      console.log("Delete successful, response:", response);
+      localStorage.removeItem("userid");
+      navigate("/");
+    } catch (error) {
+      // Check if the request was actually sent
+      if (error.request) {
+        console.error("Request was made but no response received:", error.request);
+      } else if (error.response) {
+        console.error("Error response status:", error.response.status);
+        console.error("Error response data:", error.response.data);
+      } else {
+        console.error("Error setting up request:", error.message);
+      }
     }
   };
 
@@ -45,7 +79,7 @@ const EditProfile = () => {
             type="text"
             placeholder="Enter username"
             name="username"
-            value={editUser.username}
+            value={editUser.username || ""}
             onChange={handleEditUser}
           />
         </div>
@@ -55,7 +89,7 @@ const EditProfile = () => {
             type="email"
             placeholder="Enter email"
             name="email"
-            value={editUser.email}
+            value={editUser.email || ""}
             onChange={handleEditUser}
           />
         </div>
@@ -65,12 +99,13 @@ const EditProfile = () => {
             type="text"
             placeholder="Enter password"
             name="password"
-            value={editUser.password}
+            value={editUser.password || ""}
             onChange={handleEditUser}
           />
         </div>
         <div className={styles.btnGroup}>
           <button type="submit">Update</button>
+          <button type="button" className={styles.deleteBtn} onClick={handleDeleteProfile}>Delete Profile</button>
         </div>
       </form>
     </div>

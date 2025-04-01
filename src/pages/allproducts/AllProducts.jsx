@@ -5,8 +5,7 @@ import axios from "axios";
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  let userid = localStorage.getItem("userid");
+  const userid = localStorage.getItem("userid");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -25,26 +24,24 @@ const AllProducts = () => {
   }, []);
 
   let handleAddToCart = async (product) => {
-    console.log(product);
-    let { data } = await axios.get(`https://j-son-server.onrender.com/${userid}`);
-    console.log(data);
+    let { data } = await axios.get(`https://j-son-server.onrender.com/users/${userid}`);
+    console.log("Cart before update:", data.cart); // Add logging for cart
 
     let updatedCart = data.cart ? [...data.cart] : [];
-
-    let existingProduct = updatedCart.find((ele) => ele.id === product.id)
+    let existingProduct = updatedCart.find((ele) => ele.id === product.id);
 
     if (existingProduct) {
-      existingProduct.quantity += 1
+      existingProduct.quantity += 1;
     } else {
-      updatedCart.push({ ...product, quantity: 1 })
+      updatedCart.push({ ...product, quantity: 1 });
     }
 
-    await axios.patch(`https://j-son-server.onrender.com/${userid}`, {
-      cart: updatedCart
-    })
+    await axios.patch(`https://j-son-server.onrender.com/users/${userid}`, {
+      cart: updatedCart,
+    });
 
     console.log("Product added");
-
+    console.log("Cart after update:", updatedCart); // Add logging for updated cart
   };
 
   if (loading) {
